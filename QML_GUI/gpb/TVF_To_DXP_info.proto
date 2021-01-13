@@ -1,0 +1,53 @@
+//
+// CONFIDENTIAL - FORD MOTOR COMPANY
+//
+// This is an unpublished work, which is a trade secret, created in
+// 2020. Ford Motor Company owns all rights to this work and intends
+// to maintain it in confidence to preserve its trade secret status.
+// Ford Motor Company reserves the right to protect this work as an
+// unpublished copyrighted work in the event of an inadvertent or
+// deliberate unauthorized publication. Ford Motor Company also
+// reserves its rights under the copyright laws to protect this work
+// as a published work. Those having access to this work may not copy
+// it, use it, or disclose the information contained in it without
+// the written authorization of Ford Motor Company.
+//
+
+syntax = "proto3";
+
+package ford.av.taas;
+
+/**
+ * Feature: TVF
+ * Lead Program: V713
+ * UPV1 Date: Nov-1-2019
+ * JIRA Number: VSA-91
+ * Function Name: Taas Vehicle Function
+ * Functional Spec: Not Available
+ * Interface Version: 1.0.0
+ * Function Description: This service is providing all interfaces with different ECU(see comsumers).
+ * Host ECU: AVPIM(ADSIMA)
+ * Planned Consumers: SDM, ECG(+Arrival), APIM, VDS, ADM
+ * Consumer Authorization Required: Yes
+ * File Name: Taas_Vehicle_Function_info.proto
+ * Package Name: ford.av.taas
+ *
+ * @fnv_service_proto: This service is providing all interfaces with different ECU(see comsumers).
+ * @fnv_deprecated: FALSE
+ * @fnv_scope: Not Available
+ * @fnv_api_source: Not Available
+ * @fnv_hld_link: Not Available
+ * @fnv_dd_link: Not Available
+ * @fnv_user_guide_link: Not Available
+ * @fnv_release_note_1.0.0: Not Available
+ * @fnv_spec_link: Not Available
+ */
+
+message __ApiVersion {
+  enum Ver {
+    option allow_alias = true;
+    minor = 0;
+    file_update = 0;
+    major = 1;
+  }
+}

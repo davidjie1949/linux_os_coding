@@ -1,0 +1,393 @@
+//
+// CONFIDENTIAL - FORD MOTOR COMPANY
+//
+// This is an unpublished work, which is a trade secret, created in
+// 2020. Ford Motor Company owns all rights to this work and intends
+// to maintain it in confidence to preserve its trade secret status.
+// Ford Motor Company reserves the right to protect this work as an
+// unpublished copyrighted work in the event of an inadvertent or
+// deliberate unauthorized publication. Ford Motor Company also
+// reserves its rights under the copyright laws to protect this work
+// as a published work. Those having access to this work may not copy
+// it, use it, or disclose the information contained in it without
+// the written authorization of Ford Motor Company.
+//
+
+syntax = "proto3";
+
+package ford.av.taas;
+
+import public "TVF_To_DXP_info.proto";
+
+/**
+ * @fnv_message_proto: CancelPulloverRqst
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/REQUEST/AVPIM/SDM/CANCELPULLOVER
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to request passenger cancel pullover
+ * @fnv_response: CancelPulloverResp
+ */
+message CancelPullover {
+  __ApiVersion __api_version = 1;
+  bool cancel_pullover = 2; //TRUE = Cancel pullover
+}
+
+/**
+ * @fnv_message_proto: CancelPulloverResp
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/RESPONSE/AVPIM/TVF/CANCELPULLOVER
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to provide a response to the cancel pullover request
+ * @fnv_request: CancelPulloverRqst
+ */
+message CancelPulloverResp {
+  __ApiVersion __api_version = 1;
+
+  enum PulloverCancelStatus {
+  PULLOVER_CANCEL_NULL = 0;
+  PULLOVER_CANCEL_DECLINED = 1;
+  PULLOVER_CANCEL_ACCEPTED = 2;
+  }
+
+  PulloverCancelStatus cancel_pullover_status = 2;
+}
+
+/**
+ * @fnv_message_proto: GoAckRqst
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/REQUEST/AVPIM/SDM/GOACK
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to request to the vehicle to GO after user press GO button
+ * @fnv_response: GoAckResp
+ */
+message GoAck {
+  __ApiVersion __api_version = 1;
+  bytes trip_id = 2; //Trip ID that is sending the Go Request
+}
+
+/**
+ * @fnv_message_proto: GoAckResp
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/RESPONSE/AVPIM/TVF/GOACK
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to provide response to goAck request
+ * @fnv_request: GoAckRqst
+ */
+message GoAckResp {
+  __ApiVersion __api_version = 1;
+
+  enum GoACKRespStatus {
+  GO_DECLINED_NULL = 0; //?
+  GO_DECLINED_AWAITING_VDS = 1; //decline the GO button, waiting on VDS
+  GO_DECLINED_AWAITING_VDS_DOORS_OPEN = 2; //decline the GO button, doors are open
+  GO_DECLINED_DOORS_OPEN = 3; //decline the GO button, doors are open
+  GO_ENABLED = 4; //enable the GO button
+  }
+
+  GoACKRespStatus go_ack_status = 2;
+}
+
+/**
+ * @fnv_message_proto: PassengerPulloverRqst
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/REQUEST/AVPIM/SDM/PASSENGERPULLOVER
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to request vehicle pullover
+ * @fnv_response: PassengerPulloverResp
+ */
+message PassengerPullover {
+  __ApiVersion __api_version = 1;
+  bool passenger_pullover = 2; //TRUE = Request pullover
+}
+
+/**
+ * @fnv_message_proto: PassengerPulloverResp
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/RESPONSE/AVPIM/TVF/PASSENGERPULLOVER
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to provide a response to vehicle pullover request
+ * @fnv_request: PassengerPulloverRqst
+ */
+message PassengerPulloverResp {
+  __ApiVersion __api_version = 1;
+
+  enum PulloverStatus {
+  PULLOVER_NULL = 0; //?
+  PULLOVER_DECLINED = 1; //Pullover request is declined
+  PULLOVER_ACCEPTED = 2; //Pullover Requested is Accepted
+  }
+
+  PulloverStatus passenger_pullover_status = 2;
+}
+
+/**
+ * @fnv_message_proto: NewPassengerCountRqst
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/REQUEST/AVPIM/SDM/NEWPASSENGERCOUNT
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to request to passenger count
+ * @fnv_response: NewPassengerCountResp
+ */
+message NewPassengerCount {
+  __ApiVersion __api_version = 1;
+  bytes trip_id = 2; //Trip Id for which the passenger count should be updated
+  uint32 pass_count = 3; //Number of passengers present, Max.255
+}
+
+/**
+ * @fnv_message_proto: NewPassengerCountResp
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/RESPONSE/AVPIM/TVF/NEWPASSENGERCOUNT
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to provide response to passenger count request
+ * @fnv_request: NewPassengerCountRqst
+ */
+message NewPassengerCountResp {
+  __ApiVersion __api_version = 1;
+
+  enum PassCountStatus {
+  PASS_COUNT_NULL = 0; //?
+  PASS_COUNT_ERROR = 1; //There was an error while updating passenger count
+  PASS_COUNT_CHANGED = 2; //PassengerCount succesfully changed
+  }
+
+  PassCountStatus pass_count_status = 2;
+}
+
+/**
+ * @fnv_message_proto: TripIDRequestMoreTimeRqst
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/REQUEST/AVPIM/SDM/TRIPIDREQUESTMORETIME
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to request to the more boarding time
+ * @fnv_response: TripIDRequestMoreTimeResp
+ */
+message TripIDRequestMoreTime {
+  __ApiVersion __api_version = 1;
+  bytes trip_id = 2; //Trip ID that has requested more time for boarding
+}
+
+/**
+ * @fnv_message_proto: TripIDRequestMoreTimeResp
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/RESPONSE/AVPIM/TVF/TRIPIDREQUESTMORETIME
+ * @fnv_command: Not Applicable
+ * @fnv_description: Used to provide a response to the more boarding time request
+ * @fnv_request: TripIDRequestMoreTimeRqst
+ */
+message TripIDRequestMoreTimeResp {
+  __ApiVersion __api_version = 1;
+
+  enum LingerRequestStatus {
+  TIME_EXTENSION_NULL = 0; //?
+  TIME_EXTENSION_DECLINED = 1; //Time Extension was declined
+  TIME_EXTENDED = 2; //Time Extension was accepted
+  }
+
+  LingerRequestStatus more_time_status = 2;
+}
+
+/**
+ * @fnv_message_proto: Arrival
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/DATA/AVPIM/TVF/ARRIVAL
+ * @fnv_command: Not Applicable
+ * @fnv_description: Broadcast the arrival message
+ */
+message PublishArrival {
+  __ApiVersion __api_version = 1;
+  bool should_disp = 2; //True = en route / arrived message should be displayed
+
+  enum CurbSide {
+  CURB_SIDE_NULL = 0; //Max. 255
+  CURB_SIDE_LEFT = 1;
+  CURB_SIDE_RIGHT = 2;
+  CURB_SIDE_BOTH = 3;
+  CURB_SIDE_NEITHER = 4;
+  }
+
+  CurbSide curbside = 3;
+}
+
+/**
+ * @fnv_message_proto: Linger
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/DATA/AVPIM/TVF/LINGER
+ * @fnv_command: Not Applicable
+ * @fnv_description: Broadcast the linger time, flag if linger time is exceeded, flag if linger time can be extended, and flag to trigger emphatic leave notice (user is about to run out of time)
+ */
+message PublishLinger {
+  __ApiVersion __api_version = 1;
+  uint32 linger_rem = 2; //Countdown in seconds, Max. 65535
+  bool linger_exc = 3; //Linger time not exceeded/exceeded
+  bool can_extend_linger = 4; //Extension to linger time not allowed/allowed
+  bool emphatic_leave = 5; //Do not show/Show more ephatic HMI prompt
+}
+
+/**
+ * @fnv_message_proto: GoButtonStatus
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/DATA/AVPIM/TVF/GOBUTTON
+ * @fnv_command: Not Applicable
+ * @fnv_description: Broadcast the current go button enabled/disabled (could also be the enable part of the On demand braodcast for go button pressed)
+ */
+message PublishGoButtonStatus {
+  __ApiVersion __api_version = 1;
+
+  enum GoButtonStatus {
+  GO_DISABLED_NULL = 0; //?
+  GO_DISABLED_AWAITING_VDS = 1; //do not enable the GO button, waiting on VDS
+  GO_DISABLED_AWAITING_VDS_DOORS_OPEN = 2; //do not enable the GO button, doors are open
+  GO_DISABLED_DOORS_OPEN = 3; //do not enable the GO button, doors are open
+  GO_ENABLED = 4; //enable the GO button
+  }
+
+  GoButtonStatus go_button_enable = 2;
+}
+
+/**
+ * @fnv_message_proto: OnboardingTripsInfo
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/DATA/AVPIM/TVF/ONBOARDINGINFO
+ * @fnv_command: Not Applicable
+ * @fnv_description: Broadcast flag indicating passenger count can be updated via SDM. Broadcast flag indicating interior authentication screens should be displayed via SDM. Broadcast trip IDs boarding, whether that trip ID is possibly present, whether that trip ID can update passenger count, and the expected number of passengers for that trip ID.
+ */
+message PublishOnboardingInfo {
+  __ApiVersion __api_version = 1;
+  message TripOnboardInfo {
+    bytes TripID = 1;
+    bool possibly_present = 2; //Flag indicating if trip is possibly_present
+    bool can_update_passengers = 3; //Flag indicating users can update passenger count
+    uint32 exp_num_pass = 4; //Expected # of passengers for trip, Max.255
+    string pickup_name = 5; //size = 88 characters
+    
+    message PickupLocation {
+      uint32 pickup_latitude_degree = 1;
+      uint32 pickup_latitude_minute = 2;
+      uint32 pickup_latitude_mmin = 3;
+      bool pickup_latitiude_orientation = 4;
+      uint32 pickup_longitude_degree = 5;
+      uint32 pickup_longitude_minute = 6;
+      uint32 pickup_longitude_mmin = 7;
+      bool pickup_longitude_orientation = 8;
+    }
+
+    PickupLocation pickup_location = 6;
+
+    message DropoffLocation {
+      uint32 dropoff_latitude_degree = 1;
+      uint32 dropoff_latitude_minute = 2;
+      uint32 dropoff_latitude_mmin = 3;
+      bool dropoff_latitiude_orientation = 4;
+      uint32 dropoff_longitude_degree = 5;
+      uint32 dropoff_longitude_minute = 6;
+      uint32 dropoff_longitude_mmin = 7;
+      bool dropoff_longitude_orientation = 8;
+    }
+
+    DropoffLocation dropoff_location = 7;
+    
+    string dropoff_name = 8; //size = 88 characters
+  }
+  repeated TripOnboardInfo Trip_Onboard_Info = 2; //Array of trip information for one or more trips that are onboarding Max. 5
+  bool can_update_passengers = 3;
+}
+
+/**
+ * @fnv_message_proto: Mrc
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/DATA/AVPIM/TVF/MRC
+ * @fnv_command: Not Applicable
+ * @fnv_description: Broadcast the status of Minimum Risk Condition
+ */
+message PublishMrc {
+  __ApiVersion __api_version = 1;
+
+  enum MrcDescription {
+  FAULT_DESCRIPTION_TBD_FMES = 0; //Description of current Minimum Risk Condition
+  }
+
+  MrcDescription fault_description = 2;
+
+  bool completed = 3; //TRUE = MRC event has completed
+
+  enum Recoverable {
+  RECOVERABLE_TBD_FMES = 0;
+  }
+
+  Recoverable recoverable = 4;
+
+  bool doors_open = 5; //Doors are open
+  bool leo_stop_active = 6; //Law Enforcement Officer stop is active
+
+  enum PesState {
+  PES_STATE_TBD_FMES = 0;
+  }
+
+  PesState pes_state = 7;
+  bool cloud_stop_active = 8;
+
+  enum ConveniencePullover {
+  CONVENIENCE_PULLOVER_TBD_FMES = 0;
+  }
+
+  ConveniencePullover convenience_pullover = 9;
+  bool liftgate_open = 10;
+}
+
+/**
+ * @fnv_message_proto: DriveUpdates
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/DATA/AVPIM/TVF/DRIVEUPDATES
+ * @fnv_command: Not Applicable
+ * @fnv_description: Broadcast drive phase updates
+ */
+message PublishDriveUpdates {
+  __ApiVersion __api_version = 1;
+  bool arrival_imminent = 2; //Vehicle is about to arrive at destination
+  uint32 eta = 3; //estimated to arrival in seconds Max.65535
+  bool stop_location_updated = 4; //TRUE = Stopping location has changed
+}
+
+/**
+ * @fnv_message_proto: OffboardingTrips
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/DATA/AVPIM/TVF/OFFBOARDINGTRIPS
+ * @fnv_command: Not Applicable
+ * @fnv_description: Broadcast the trip IDs offboarding to HMI (needed to enable extending linger time)
+ */
+message PublishOffboardingTrips {
+  __ApiVersion __api_version = 1;
+  repeated bytes trip_ids_offboarding = 2; //Tri IDs for all trips off boarding Max. 5
+}
+
+/**
+ * @fnv_message_proto: ActiveTripsInfo
+ * @fnv_deprecated: FALSE
+ * @fnv_topic: SERVICES/DATA/AVPIM/TVF/ACTIVETRIPINFO
+ * @fnv_command: Not Applicable
+ * @fnv_description: Broadcast active trip information to SDM
+ */
+message PublishActiveTripInfo {
+  message TripActiveInfo {
+    bytes trip_id = 1;
+    string drop_off_name = 2; //size = 88 characters
+
+    message DropOffGPS {
+    uint32 drop_off_latitude_degree = 1;
+    uint32 drop_off_latitude_minute = 2;
+    uint32 drop_off_latitude_mmin = 3;
+    bool drop_off_latitiude_orientation = 4;
+    uint32 drop_off_longitude_degree = 5;
+    uint32 drop_off_longitude_minute = 6;
+    uint32 drop_off_longitude_mmin = 7;
+    bool drop_off_longitude_orientation = 8;
+    }
+
+    DropOffGPS drop_off_GPS = 3;
+    uint32 eta = 4; //Max. 65535
+  }
+
+  __ApiVersion __api_version = 1;
+  repeated TripActiveInfo trip_active_info = 2; //Array of trip information for one or more trips that are active in vehicle. Max. 5
+}
