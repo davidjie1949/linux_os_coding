@@ -1,0 +1,35 @@
+under root to execute
+//user add
+$ useradd zwj
+//delete user
+$ userdel zwj
+$ userdel -r jyang174 // it will delete /home/dog directory
+
+//create user and assign to specific directory
+$ useradd -d /home/dog jyang174
+$ passwd jyang174
+123abcABC
+
+//group add
+$ groupadd
+groupadd wudang
+//delete group
+$ groupdel wudang
+
+//assign user to existing group
+$ useradd -g wudang zwj
+
+//change user's group
+$ usermod -g shaolin zwj
+
+//user info
+$/etc/passwd
+
+//save password info
+$/etc/shadow
+
+//group info
+$/etc/group
+
+//etc/inittab
+init [012356]

@@ -1,0 +1,209 @@
+
+#su - jyang174 // change user
+$whoami // who am i
+
+//get infomation
+$id jyang174
+
+$vi //view :q :q! quite w/o change
+$bc // calculator, ctrl + d to quit
+$wc xxx.txt //shows lines/words/bytes in xxxx.txt
+$diff xxx.txt ooo.txt
+$man
+$help
+$pwd
+$ls -l/-a/-al filename
+$ls -al > file //override
+$ls -al >> file //append
+$cat file1 > file2 //override
+$echo contents > file //override
+$echo contents >> file // append
+
+$cd ~ == $cd
+$cd .. // return to previous directory
+absolute directory: cd /home/jyang174/github
+relative directory: cd ../home
+
+$mkdir /home/dog
+$mkdir -p /home/animal/cat // -p parents
+
+$rmdir /home/dog // only delete empty directory
+//if there is files
+$rm -rf /home/dog // -r recursive -f force
+$rm -r mydir // remove folder and contents(rm -r *)
+$rm -r *
+$touch help.txt // create file
+$touch -d 20121201 file.txt // create the specific date file
+$cp // copy one file to another
+$cp -r test/ zwj/ //recusive the whole folder/files
+$\cp -r test/ zwj/ //force to override existing files
+$mv xxx ooo // move or rename
+$cat //read only
+$cat -n //display number of lines
+$cat -n /etc/profile | more
+// arrow key or enter key can view the line by line
+// ctrl+f previous page, 
+// ctrl+b or space next page, or space bar
+$less
+$echo output env virables
+$head -n 5//review the 1st 5 lines
+$tail -n 5 // review the last 5 lines
+$tail -f file // realtime to new contents adding in
+$ln -s /root myroot//create softlink
+$rm -rf myroot //delete softlink
+$history // up arrow to view the past commands
+$history 10
+$!178 //like execute the #178 line in history
+
+//view date
+$date     //display current time
+$date +%Y //display year
+$date +%m //display month
+$date +%d //display day
+$date "+%Y-%m-%d%H:%M:%S"
+
+//set date
+$date -s "2018-10-10 11:22:22"
+
+//calendar
+$cal
+$cal 2020 //review 2020 year
+
+$find + folder + options:
+options:
+-name
+-user
+-size 
+
+$find /home -name hello.txt //accotding file name
+$find /home -name *.txt
+$find /opt -user root       //according owner to search
+$find / -size +20M          //according file size greater than
+-20M less than
+20M equal to 
+k could be lowercase
+
+$locate //needs updatedb to update locate database
+
+$grep
+-n display line number
+-i ignore case sensitive
+-r recursive 
+-v inverse, exclude the key word, the remaining contents
+-E '[0-9]' tips.txt
+-o only display the key word findings.
+--color=auto, display the key word in color
+$cat tips.txt | grep -ni date // == $grep date tips.txt
+$grep -c repo tips.txt //count the number of appearance.
+$grep --color=auto repo tips.txt
+$grep ^repo tips.txt //start repo as beginning
+$grep ^adb$ tips.txt //starting repo as beginning and the line
+$grep a.b tips.txt //.is ramdomly chararter
+
+$gzip // zip
+$gunzip //unzip
+both won't keep the original files, -> .gz directly zip file
+
+$zip  
+$zip -r xxxx.zip /home/
+$unzip -d /opt/tmp/ xxxx.zip  // -> .zip
+$unzip xxxx.zip
+
+$tar command
+-c produce .tar file
+-v display in details
+-f zip file name
+-z zip and compact
+-x unzip .tar file
+$tar -cvzf a.tar.gz a1.txt a2.txt
+$tar -cvzf a.tar.gz /home/  the whole directory
+$tar -xvf a.tar.gz
+$tar -xvf a.tar.gz -C /opt/
+
+$crontab //scheduling task
+-e edit crontab tasks
+-l search crontab tasks
+-r delete all scheduled tasks
+
+*/1 **** ls -l /etc >> /tmp/to.txt
+
+a = show processes for all users
+u = display the process’s user/owner
+x = also show processes not attached to a terminal
+
+$ps -aux | more // all processes
+$ps -aux | grep sshd // specific process
+$ps -ef | more // review the parent process
+
+$ps aux | grep chrome
+
+kill    – Kill a process by ID
+kill SIGNAL PID
+kill -9 3827
+killall – Kill a process by name
+kill SIGNAL name
+killall -9 chrome
+
+kill -l
+The most common kill signals are:
+Signal        Name        Single Value Effect
+SIGHUP  1                   Hangup
+SIGINT  2                   Interrupt from keyboard
+SIGKILL 9                   Kill signal
+SIGTERM 15                  Termination signal
+SIGSTOP 17, 19, 23          Stop the process
+
+pkill -f google
+
+killall gedit //kill by name
+pstree // read by structure like tree
+$pstree -p // pid
+$pstree -u // user name
+
+// check current service running
+$sudo service --status-all
+$sudo service list | grep wifi
+or 
+// Two options to check the each service state under which rulelevels to operate
+//1. $ls -l /etc/init.d/ // read only, if want to edit runlevels, use below command
+        $chkconfig --list | grep
+        $chkconfig service_name --list
+        $chkconfig --level 5 service_name on/off
+        $chkconfig service_name off //stop the service under any rule levels
+        after that, reboot to make it work.
+//2. $sudo apt-get install sysv-rc-conf -> $sudo sysv-rc-conf //can read and write edited both
+
+//check runlevels from system startup
+$ nano /etc/init/whoopsie.conf  //Unbuntu version
+startup -> BIOS -> /boot ->/init -> rulelevels /etc/init/whoopsie.conf
+
+// service or systemctl + start/stop/restart/reload/status is just temporary work,
+if you want to permenent start/stop service, you need to use the 
+1). $systecmctl enable/disable service_name.service == $chkconfig service_name on/off
+or 
+2). $sudo sysv-rc-conf
+
+$telnet 19.32.144.220 22 to check the port open
+
+$top it's like windows task manager dynamicaly display system status, memory usage check
+-d refresh rate: example top -d 1 //refresh every second
+-i don't display any sleep or dead lock PID
+-p is specific PID, example, top -p 1
+u jie //specific user monitor
+P %CPU M $MEM N $PID q quit
+
+$ps -aux | grep xxxx //process check
+$df -lh //system memory usage
+
+$netstat -anp | grep sshd //port status check
+-an sorted output
+-p  display which process is used
+
+or
+$netstat -tunlp
+
+$sudo apt install iotop //install, monitor i/o state
+$sudo iotop //run
+
+$sudo !! add privilege to the previous failed cmd which needs sudo required
+$sudo apt-get update && sudo apt-get upgrade -y (y means "yes", don't need user to press y key)

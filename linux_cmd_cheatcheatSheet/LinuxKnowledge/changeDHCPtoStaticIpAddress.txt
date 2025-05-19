@@ -1,0 +1,29 @@
+change DHCP to static ip address
+1). Determine your Raspberry PI's current IP v4 address
+$hostname -I
+    19.32.134.220
+2). Get your router's IP address
+$ip r
+    default via 19.32.134.1 dev wlan0 proto dhcp src 19.32.134.220 metric 303
+    19.32.134.0/23 dev wlan0 proto dhcp scope link src 19.32.134.220 metric 303
+3). Get the IP address of your DNS
+$nano /etc/resolv.conf
+nameserver 19.13.13.68
+4). Open /etc/dhcpcd.conf
+$nano /etc/dhcpcd.conf
+    Add the following lines
+    //interface [INTERFACE]
+    //static ip_address=[STATIC IP ADDRESS YOU WANT]/24
+    //static routers=[ROUTER IP]
+    //static domain_name_servers=[DNS IP]
+
+    interface wlan0
+    static ip_address=19.32.134.220/24
+    static routers=19.32.134.1
+    static domain_name_servers=19.13.13.68
+5). Restart the network
+# For systemd hosts
+$ sudo systemctl restart networking.service
+# For pre-systemd hosts
+$ sudo /etc/init.d/networking restart
+//reference link https://www.makeuseof.com/raspberry-pi-set-static-ip/

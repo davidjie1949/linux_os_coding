@@ -1,0 +1,22 @@
+Tag Release:
+
+Manifest PR build:
+
+AOSP Build:
+FSB Build:
+
+Changes:
+
+Release Tag:
+
+Diff:
+
+
+Issue:
+
+Updates:
+
+Sources obtained from:
+Case Nr. IFX-230420-916987
+Attachment:
+URL:

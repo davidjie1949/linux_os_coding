@@ -1,0 +1,7 @@
+how to add another new disk3s6
+1). patition $fdisk /dev/sdb
+2). format   $mkfs -t ext4 /dev/sdb1
+3). mount    $mount /dev/sdb1 /home/newdisk
+4). permenent $code /etc/fstab 
+    add the line in: /dev/sdb1 /home/newdisk ext4 defaults 0 0
+5). $mount -a

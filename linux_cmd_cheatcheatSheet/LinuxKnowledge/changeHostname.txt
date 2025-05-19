@@ -1,0 +1,11 @@
+change hostname via cmd 
+Step 1. $nano /etc/hostname
+                raspi4
+Step 2. $nano /etc/hosts
+                19.32.134.220 raspi4
+then reboot
+//reference link https://pimylifeup.com/raspberry-pi-hostname/
+//Alternative way: use GUI
+//change hostname via raspi-config
+$sudo raspi-config
+interface options -> Hosname

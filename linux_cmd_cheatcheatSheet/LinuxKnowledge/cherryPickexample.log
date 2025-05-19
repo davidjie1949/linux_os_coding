@@ -1,0 +1,128 @@
+// git cherry-pick
+$git remote -v
+$git fetch origin or github-phx-aosp -pa
+$git pull
+$git checkout milestone/FNV-2023-03
+$git checkout -b TCU-86445_86488_Milestone //under the milestone to create branch, giving the branch name.
+$git cherry-pick #hash 438818f // which is your branch merged to master 
+//or $git cherry-pick -x <sha-of-commit> -> eg. git cherry-pick -x e4027c30645a2933082d44504678e29d6a218f62
+$git log -2
+$git push --set-upstream origin TCU-86445_86488_Milestone
+Then in github website, create pr request
+Reference:
+https://www.eesewiki.ford.com/display/AOS/PHOENIX+-+Milestone+Branch+Release+Process
+
+Example:
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git fetch -pa
+
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git checkout milestone/V1.0.0-2023.04
+Switched to branch 'milestone/V1.0.0-2023.04'
+Your branch is up to date with 'origin/milestone/V1.0.0-2023.04'.
+
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git log -2
+commit 070fd118732facf588d174658e464bd7834af6d6 (HEAD -> milestone/V1.0.0-2023.04, origin/milestone/V1.0.0-2023.04)
+Author: Rick Mutzke <rmutzke@ford.com>
+Date:   Thu May 4 12:32:39 2023 -0400
+
+    Create Ford Keyboard release tag v1.0.4 (#6986)
+    
+    AOS-144783
+    
+    AOS-142769
+    
+    https://github.ford.com/PHX-AOSP/vendor-ford-packages-inputmethods-FordIME/compare/v1.0.3...v1.0.4
+    https://github.ford.com/PHX-AOSP/vendor-ford-packages-inputmethods-FordIME/releases/tag/v1.0.4
+    
+    AOS-142769: Keyboard hide google sign in box on CDX707 [S-car #15]
+    
+    Originally #6974
+
+commit 3c2e656f564411805ed2bf6610a39c0b4df1f0bd
+Author: AKHURAN2 <Akhuran2@ford.com>
+Date:   Thu May 4 10:50:50 2023 -0400
+
+    Bump Cabin Tags v0.0.145 Update for Milestone branch (#7027)
+    
+    AOS-144944
+    AOS-138947:
+    AOS-101141
+    AOS-139955
+    AOS-141322
+    AOS-131590
+    AOS-140768
+    AOS-126859
+
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git branch
+  default
+* milestone/V1.0.0-2023.04
+  qc-integration-3.2.4.1-r701.2
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 5 (delta 3), reused 5 (delta 3), pack-reused 0
+Unpacking objects: 100% (5/5), 579 bytes | 144.00 KiB/s, done.
+From ssh://github.ford.com/PHX-AOSP/manifest
+ * [new branch]        topic/FordSdk_v0.0.55 -> origin/topic/FordSdk_v0.0.55
+Already up to date.
+
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git checkout -b cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50
+Switched to a new branch 'cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50'
+
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git cherry-pick -x e4027c30645a2933082d44504678e29d6a218f62
+Auto-merging ford/device/forked.xml
+[cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50 e98e7cdb] Release vendor-infineon-wlan-proprietary-v1.9.0 & qcom-kernel-msm-5.4-v0.0.50 (#7000)
+ Author: JYANG174 <jyang174@ford.com>
+ Date: Thu May 4 08:48:31 2023 -0400
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git log -2
+commit e98e7cdb9068e30864a17847ecc115cf4ebc1ebd (HEAD -> cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50)
+Author: JYANG174 <jyang174@ford.com>
+Date:   Thu May 4 08:48:31 2023 -0400
+
+    Release vendor-infineon-wlan-proprietary-v1.9.0 & qcom-kernel-msm-5.4-v0.0.50 (#7000)
+    
+    AOS-144600
+    AOS-144261
+    AOS-144602
+    AOS-124041
+    
+    Changes:
+    AOS-144600 remove WL_SAE guards to resolve hostapd crash on +63 char PWs by @KJOHN402
+    AOS-144261 Add Apple Device IE's to Association Response by @LDOBROWO
+    AOS-144602 Disable WPA3 Enterprise by @JYANG174
+    AOS-124041 Disable features for unsupported certification programs: MBO & OCE @FZENG5
+    
+    Release Tag:
+    https://github.ford.com/PHX-AOSP/vendor-infineon-wlan-proprietary/releases/tag/v1.9.0
+    https://github.ford.com/PHX-AOSP/qcom-kernel-msm-5.4/releases/tag/3.2.4.1_r701.2-0.0.50
+    
+    Diff:
+    https://github.ford.com/PHX-AOSP/vendor-infineon-wlan-proprietary/compare/v1.8.2...v1.9.0
+    https://github.ford.com/PHX-AOSP/qcom-kernel-msm-5.4/compare/3.2.4.1_r701.2-0.0.49...3.2.4.1_r701.2-0.0.50
+    (cherry picked from commit e4027c30645a2933082d44504678e29d6a218f62)
+
+commit 070fd118732facf588d174658e464bd7834af6d6 (origin/milestone/V1.0.0-2023.04, milestone/V1.0.0-2023.04)
+Author: Rick Mutzke <rmutzke@ford.com>
+Date:   Thu May 4 12:32:39 2023 -0400
+
+    Create Ford Keyboard release tag v1.0.4 (#6986)
+    
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ git push --set-upstream origin cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 950 bytes | 237.00 KiB/s, done.
+Total 6 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+remote: 
+remote: Create a pull request for 'cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50' on GitHub by visiting:
+remote:      https://github.ford.com/PHX-AOSP/manifest/pull/new/cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50
+remote: 
+To ssh://github.ford.com/PHX-AOSP/manifest
+ * [new branch]        cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50 -> cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50
+Branch 'cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50' set up to track remote branch 'cherry_pick_wifi_wlan_1.9.0_kernel-v0.0.50' from 'origin'.
+jyang174@na1.ford.com@UGC1B2GCS33:~/phx-aosp/.repo/manifests$ 
+
